@@ -1,4 +1,4 @@
-import { Expense } from "../App"
+import { Expense } from '../common/Expense'
 import { FC } from 'react';
 import Navbar from "../components/Navbar";
 import '../App.css'
@@ -6,6 +6,7 @@ import '../App.css'
 export interface ViewExpensesProps{
     expenses: Expense[]
 }
+
 const ViewExpense: FC<ViewExpensesProps> = ({ expenses }) => {
   return (
     <div className="container">

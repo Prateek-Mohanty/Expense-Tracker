@@ -1,10 +1,10 @@
 import { useState } from "react"
-import { Expense } from "../App"
+import { Expense } from '../common/Expense'
 import Navbar from "../components/Navbar";
 import '../App.css'
 
 interface AddExpenseProps {
-    addExpense: (expense: Omit<Expense, 'id'>) => void;
+    addExpense: (expense: Expense) => void;
 }
 
 function AddExpense({addExpense}: AddExpenseProps) {
@@ -17,7 +17,7 @@ function AddExpense({addExpense}: AddExpenseProps) {
         const newExpense = {
             expenseName,
             amount: parseFloat(amount),
-            date
+            date,
         }
 
         addExpense(newExpense)

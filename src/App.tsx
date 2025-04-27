@@ -3,20 +3,14 @@ import Dashboard from './pages/Dashboard'
 import AddExpense from './pages/AddExpense'
 import ViewExpense from './pages/ViewExpense'
 import { useState } from 'react'
+import { Expense } from './common/Expense'
 import './App.css'
-
-export interface Expense {
-  id: number;
-  expenseName: string;
-  amount: number;
-  date: string;
-}
 
 function App() {
 
   const[expenses, setExpenses] = useState<Expense[]>([])
 
-  const addExpense = (expense: Omit<Expense, 'id'>) => {
+  const addExpense = (expense: Expense) => {
     const newExpense = {...expense, id:Date.now(),}
     setExpenses((prev)=>[...prev,newExpense])
   }
