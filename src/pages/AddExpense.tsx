@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { Expense } from '../common/Expense'
 import Navbar from "../components/Navbar";
+import { inputConfig } from "../utils/config";
 import '../App.css'
 
 interface AddExpenseProps {
@@ -8,64 +9,52 @@ interface AddExpenseProps {
 }
 
 function AddExpense({addExpense}: AddExpenseProps) {
-    const [amount, setAmount] = useState('')
-    const [expenseName, setExpenseName] = useState('')
-    const [date, setDate] = useState('')
+    const [formData, setFormData] = useState({
+        expenseName: '',
+        amount: '',
+        date: ''
+    });
 
-    const handleSubmit = (e: React.FormEvent) =>{
-        e.preventDefault()
-        const newExpense = {
-            expenseName,
-            amount: parseFloat(amount),
-            date,
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setFormData((prev) => ({
+          ...prev,
+          [name]: value
+        }));
+      };
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (formData.expenseName && formData.amount && formData.date) {
+          addExpense({
+            ...formData,
+            amount: parseFloat(formData.amount),
+            id: Date.now(),
+          });
+          setFormData({ expenseName: '', amount: '', date: '' }); 
+        } else {
+          alert('Please fill in all fields.');
         }
-
-        addExpense(newExpense)
-
-        setExpenseName('')
-        setAmount('')
-        setDate('')
-    }
+    };
   return (
     <div className="container">
     <h1>Add Expense</h1>
     <form>
-        <div>
-            <label htmlFor="expenseName">Expense Name: </label>
-            <input 
-                type="text" 
-                id="expenseName"
-                name="ExpenseName"
-                value={expenseName}
-                onChange={(e)=>setExpenseName(e.target.value)}
-                required
-            />
-        </div>
-
-        <div>
-            <label htmlFor="amount">Amount:</label>
-                <input 
-                    type="number" 
-                    id="amount"
-                    name="amount"
-                    value={amount}
-                    onChange={(e)=>setAmount(e.target.value)}
-                    required
-                />
-        </div>
-
-        <div>
-            <label htmlFor="date">Date: </label>
-                <input 
-                    type="date" 
-                    id="date"
-                    name="date"
-                    value={date}
-                    onChange={(e)=>setDate(e.target.value)}
-                    required
-                />
-        </div>
-
+        {inputConfig.map((ele)=>{
+            return(
+                <div key={ele.id}>
+                    <label htmlFor={ele.labelFor}>{ele.label}</label>
+                    <input 
+                        type={ele.type}
+                        name={ele.name}
+                        id={ele.id}
+                        value={formData[ele.name as keyof typeof formData]} 
+                        onChange={handleChange} 
+                        required
+                    />
+                </div>
+            )
+        })}
         <button type="submit" onClick={handleSubmit}>Add Expense</button>
     </form>
     <Navbar/>
