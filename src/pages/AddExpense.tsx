@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Expense } from '../common/Expense'
 import Navbar from "../components/Navbar";
-import { inputConfig } from "../utils/config";
+import { inputConfig } from "../utils/Config";
 import '../App.css'
 
 interface AddExpenseProps {
@@ -38,6 +38,7 @@ function AddExpense({addExpense}: AddExpenseProps) {
     };
   return (
     <div className="container">
+    <Navbar/>
     <h1>Add Expense</h1>
     <form>
         {inputConfig.map((ele)=>{
@@ -57,7 +58,6 @@ function AddExpense({addExpense}: AddExpenseProps) {
         })}
         <button type="submit" onClick={handleSubmit}>Add Expense</button>
     </form>
-    <Navbar/>
     </div>
   )
 }
