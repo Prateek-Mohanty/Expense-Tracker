@@ -43,17 +43,17 @@ function AddExpense({addExpense}: AddExpenseProps) {
     <form>
         {inputConfig.map((ele)=>{
             return(
-                <div key={ele.id}>
-                    <label htmlFor={ele.labelFor}>{ele.label}</label>
-                    <input 
-                        type={ele.type}
-                        name={ele.name}
-                        id={ele.id}
-                        value={formData[ele.name as keyof typeof formData]} 
-                        onChange={handleChange} 
-                        required
-                    />
-                </div>
+              <div key={ele.id}>
+                <label htmlFor={ele.labelFor}>{ele.label}</label>
+                <input 
+                  type={ele.type}
+                  name={ele.name}
+                  id={ele.id}
+                  value={formData[ele.name as keyof typeof formData]} 
+                  onChange={handleChange} 
+                  required
+                />
+              </div>
             )
         })}
         <button type="submit" onClick={handleSubmit}>Add Expense</button>
