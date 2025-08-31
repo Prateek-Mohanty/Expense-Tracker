@@ -30,10 +30,12 @@ function Login({ setUserLoggedIn }: LoginProps) {
       }
 
       setUserLoggedIn(true);
+      localStorage.setItem("token", response.data.access_token);
       navigate("/add-expense");
 
     } catch (err) {
       console.error("Login failed:", err);
+      console.log(loginError)
       navigate("/failed-login");
     }
   };
@@ -67,7 +69,6 @@ function Login({ setUserLoggedIn }: LoginProps) {
           </button>
         </form>
 
-        {/* 👇 Sign Up link */}
         <p className="text-center text-sm text-gray-600 mt-4">
           Don’t have an account?{" "}
           <Link to="/signup" className="text-indigo-600 font-semibold hover:underline">

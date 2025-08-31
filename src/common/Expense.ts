@@ -1,5 +1,6 @@
 export interface Expense{
-    expenseName:string,
+    id?:number,
+    expense_name:string,
     amount:number,
-    formattedDate:string
+    date:string
 }

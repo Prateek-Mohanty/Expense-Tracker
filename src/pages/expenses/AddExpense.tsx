@@ -1,11 +1,6 @@
 import { useState } from "react";
-import { Expense } from "../../common/Expense";
 
-interface AddExpenseProps {
-  addExpense: (expense: Expense) => void;
-}
-
-function AddExpense({ addExpense }: AddExpenseProps) {
+function AddExpense() {
   const [expenseName, setExpenseName] = useState("");
   const [amount, setAmount] = useState("");
   const [date, setDate] = useState(() => {
@@ -16,13 +11,6 @@ function AddExpense({ addExpense }: AddExpenseProps) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!expenseName || !amount) return;
-
-    const formattedDate = date; 
-    addExpense({
-      expenseName,
-      amount: parseFloat(amount),
-      formattedDate,
-    });
 
     setExpenseName("");
     setAmount("");

@@ -8,8 +8,9 @@ const Navbar = ({ onLogout }: NavbarProps) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    onLogout();        // clear login state
-    navigate("/login"); // redirect to login
+    onLogout();       
+    localStorage.removeItem("token");
+    navigate("/login"); 
   };
 
   return (
