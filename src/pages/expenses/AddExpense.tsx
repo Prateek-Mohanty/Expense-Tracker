@@ -1,6 +1,9 @@
 import { useState } from "react";
+import api from "../../api/api";
+import { useNavigate } from "react-router-dom";
 
 function AddExpense() {
+  const navigate = useNavigate()
   const [expenseName, setExpenseName] = useState("");
   const [amount, setAmount] = useState("");
   const [date, setDate] = useState(() => {
@@ -8,16 +11,43 @@ function AddExpense() {
     return today.toISOString().split("T")[0]; 
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!expenseName || !amount) return;
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
 
+  // Get token from localStorage
+  const token = localStorage.getItem('token');
+  if (!expenseName || !amount) return;
+
+  try {
+    // Make POST request
+    const response = await api.post(
+      "/expense/create_expense",
+      {
+        expense_name: expenseName,
+        amount: amount,
+        date: date,
+      },
+      {
+        headers: { 'Authorization': `Bearer ${token}` }
+      }
+    );
+
+    if (response.status === 201) {
+      navigate("/view-expense");
+    }
+
+    // Clear form fields
     setExpenseName("");
     setAmount("");
     setDate(new Date().toISOString().split("T")[0]);
 
-    console.log(`Expense Name: ${expenseName} amount: ${amount} date: ${date}`)
-  };
+    console.log(`Expense Name: ${expenseName}, Amount: ${amount}, Date: ${date}`);
+
+  } catch (error: any) {
+    console.error("Failed to create expense:", error.response ? error.response.data : error.message);
+  }
+};
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-blue-50">

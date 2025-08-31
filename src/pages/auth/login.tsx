@@ -34,7 +34,6 @@ function Login({ setUserLoggedIn }: LoginProps) {
       navigate("/add-expense");
 
     } catch (err) {
-      console.error("Login failed:", err);
       console.log(loginError)
       navigate("/failed-login");
     }
